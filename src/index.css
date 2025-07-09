@@ -882,6 +882,10 @@ video {
   max-width: 10rem;
 }
 
+.max-w-48{
+  max-width: 12rem;
+}
+
 .max-w-96{
   max-width: 24rem;
 }
@@ -1026,6 +1030,10 @@ video {
 
 .overflow-y-hidden{
   overflow-y: hidden;
+}
+
+.whitespace-nowrap{
+  white-space: nowrap;
 }
 
 .rounded-full{
@@ -1264,6 +1272,10 @@ video {
 
 .text-center{
   text-align: center;
+}
+
+.text-right{
+  text-align: right;
 }
 
 .font-sans{
@@ -1693,5 +1705,25 @@ footer {
   .lg\:px-40{
     padding-left: 10rem;
     padding-right: 10rem;
+  }
+
+  .lg\:pr-36{
+    padding-right: 9rem;
+  }
+
+  .lg\:pr-\[36\]{
+    padding-right: 36;
+  }
+
+  .lg\:pr-\[12vh\]{
+    padding-right: 12vh;
+  }
+
+  .lg\:pr-\[2vh\]{
+    padding-right: 2vh;
+  }
+
+  .lg\:pr-\[10vh\]{
+    padding-right: 10vh;
   }
 }

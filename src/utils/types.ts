@@ -1,6 +1,9 @@
 export type Variant = "login" | "register";
 export type ButtonVariant = "primary" | "secondary" | "tertiary" | "quaternary";
 export type InputType = "text" | "email" | "password" | "phone";
+export type CardDetailsProp = {
+  data: Content;
+};
 
 export type CheckboxUIProps = {
   variant?: "square" | "round";
@@ -38,6 +41,7 @@ export type StarRatingProps = {
 };
 
 export type CategoryProps = {
+  forceShow?: boolean;
   width?: string;
   title: React.ReactNode;
   titleClassName?: string;

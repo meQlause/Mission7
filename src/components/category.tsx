@@ -3,6 +3,7 @@ import { useIsMobile } from "../services/hooks/useIsMobile";
 import type { CategoryProps } from "../utils/types";
 
 export const CategoryComponent = ({
+  forceShow = false,
   width = "",
   title,
   titleClassName = "",
@@ -20,25 +21,27 @@ export const CategoryComponent = ({
     <>
       <div className={`grid w-full ${width} gap-0 ${showCategory ? "gap-2" : "gap-0"}`}>
         <div
-          className="flex cursor-pointer items-center justify-between md:cursor-default"
+          className={`flex cursor-pointer items-center justify-between ${!forceShow && "md:cursor-default"}`}
           onClick={handleCategoryToggle}
         >
           <div className={`text-heading6 font-bold ${titleClassName}`}>{title}</div>
           <img
-            className={`${showCategory ? "rotate-0" : "rotate-90"} block h-[15px] transition-transform duration-200 md:hidden`}
+            className={`${showCategory ? "rotate-0" : "rotate-90"} block h-[15px] transition-transform duration-200 ${!forceShow && "md:hidden"}`}
             src="/assets/right-arrow.png"
             alt="Logo"
           />
         </div>
         <ul
-          className={`${showCategory ? "block gap-3" : "hidden gap-0"} ${isMobile && "flex"} mt-4 flex-col md:flex md:gap-3`}
+          className={`${showCategory ? "flex gap-3" : "hidden gap-0"} ${isMobile && "flex"} mt-4 flex-col ${!forceShow && "md:flex"} md:gap-3`}
         >
           {Object.entries(content).map((value, index) => (
             <li
               key={index}
               className={`text-bodyMedium font-normal md:whitespace-nowrap ${contentClassName}`}
             >
-              <button onClick={value[1].func}>{value[1].element}</button>
+              <button className="w-full" onClick={value[1].func}>
+                {value[1].element}
+              </button>
             </li>
           ))}
         </ul>

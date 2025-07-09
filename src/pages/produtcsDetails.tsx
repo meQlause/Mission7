@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { CourseDetailsComponent } from "../components/courseDetails";
 import { ShowProductComponent } from "../components/showProduct";
-import { ButtonUI } from "../components/UIs/button";
 import { DividerUI } from "../components/UIs/divider";
 import { ImageAsBackgroudUI } from "../components/UIs/imageAsBackground";
 import { StarRatingUi } from "../components/UIs/stars";
@@ -9,12 +8,13 @@ import { DefaultLayout } from "../layouts/default";
 import { FooterLayout } from "../layouts/footer";
 import { HeaderLayout } from "../layouts/header";
 import { getData } from "../services/api/getData";
+import { CardDetailsComponent } from "../components/cardDetails";
 
 export const ProductsDetailsPage = () => {
   const { contents } = getData();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
+
   const idNumber = Number(id);
   if (isNaN(idNumber)) {
     navigate("/");
@@ -22,11 +22,8 @@ export const ProductsDetailsPage = () => {
 
   if (!contents) return <>Error</>;
   const data = contents.getId(idNumber).data[0];
+
   const { courseDetails } = data.details;
-  const getDiscountPrice = (price: string, discount: number): string => {
-    const priceInteger = Number(price.split(" ").at(-1)?.slice(0, -1)) * (discount / 100);
-    return `Rp ${priceInteger}K`;
-  };
   return (
     <>
       <HeaderLayout />
@@ -183,70 +180,7 @@ export const ProductsDetailsPage = () => {
               </div>
             </DefaultLayout>
           </div>
-
-          <DefaultLayout className="flex h-fit w-[351px] min-w-[350px] flex-col gap-2 rounded-lg p-5">
-            <h2 className="mb-3 text-heading6 font-bold">{data.title}</h2>
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row items-start gap-2">
-                <p className="text-bodyMedium font-bold text-[#3ECF4C]">{data.price}</p>
-                <p className="text-bodyMediumfont-bold text-[#7b7c7b] line-through">
-                  {getDiscountPrice(data.price, 50)}
-                </p>
-              </div>
-              <div className="max-w-24 rounded-md bg-[#ffbd3a] p-1 text-bodySmall font-thin text-white">
-                Diskon 50%
-              </div>
-            </div>
-            <p className="text-bodyMedium font-thin text-[#0980E2]">
-              Penawaran spesial tersisa 2 hari lagi!
-            </p>
-            <ButtonUI className="font-bold"> Beli Sekarang </ButtonUI>
-            <div className="mt-2 flex w-full flex-col">
-              <h3 className="mb-1 text-bodyMedium font-bold"> Kelas ini sudah termasuk</h3>
-              <div className="grid grid-cols-2">
-                <div className="py-2 text-bodySmall font-thin">
-                  <div className="flex flex-row gap-2">
-                    <img src="/assets/book-check.png" />
-                    Ujian Akhir
-                  </div>
-                </div>
-                <div className="py-2 text-bodySmall font-thin">
-                  <div className="flex flex-row gap-2">
-                    <img src="/assets/camera.png" />
-                    49 Video
-                  </div>
-                </div>
-                <div className="py-2 text-bodySmall font-thin">
-                  <div className="flex flex-row gap-2">
-                    <img src="/assets/book.png" />7 Dokumen
-                  </div>
-                </div>
-                <div className="py-2 text-bodySmall font-thin">
-                  <div className="flex flex-row gap-2">
-                    <img src="/assets/certificate.png" />
-                    Sertifikat
-                  </div>
-                </div>
-                <div className="py-2 text-bodySmall font-thin">
-                  <div className="flex flex-row gap-2">
-                    <img src="/assets/book-edit.png" />
-                    Pretest
-                  </div>
-                </div>
-              </div>
-              <div className="mt-2 flex flex-col">
-                <h3 className="mb-1text-bodyMedium font-bold"> Bahasa Pengantar</h3>
-                <div className="grid grid-cols-2">
-                  <div className="py-2 text-bodySmall font-thin">
-                    <div className="flex flex-row gap-2">
-                      <img src="/assets/world.png" />
-                      Bahasa Indonesia
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </DefaultLayout>
+          <CardDetailsComponent data={data} />
         </div>
 
         {/* Recomendation */}
