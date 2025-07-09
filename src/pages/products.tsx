@@ -6,16 +6,19 @@ import { FooterLayout } from "../layouts/footer";
 import { HeaderLayout } from "../layouts/header";
 import { ShowProductComponent } from "../components/showProduct";
 import { PaginationUI } from "../components/UIs/pagination";
-import { getData } from "../services/getData";
+import { getData } from "../services/api/getData";
 import type { CategoryContent, Content } from "../utils/types";
 import { useState } from "react";
 
 export const ProductsPage = () => {
-  const [data, setData] = useState<Content[]>(getData().getRandomizeData(8).data);
-  
+  const { contents } = getData();
+  if (!contents) return <>Error</>;
+
+  const [data, setData] = useState<Content[]>(contents.getRandomizeData(8).data);
+
   const filter = (filter: string, id: string) => {
     console.log(filter);
-    setData(getData().getRandomizeData(8).data);
+    setData(contents.getRandomizeData(8).data);
     document.getElementById(id)?.click();
   };
 

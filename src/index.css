@@ -560,6 +560,10 @@ video {
   pointer-events: none;
 }
 
+.static{
+  position: static;
+}
+
 .fixed{
   position: fixed;
 }
@@ -626,10 +630,6 @@ video {
 
 .m-auto{
   margin: auto;
-}
-
-.m-4{
-  margin: 1rem;
 }
 
 .mx-3{
@@ -705,14 +705,6 @@ video {
   margin-top: 1.25rem;
 }
 
-.mt-20{
-  margin-top: 5rem;
-}
-
-.mt-32{
-  margin-top: 8rem;
-}
-
 .box-border{
   box-sizing: border-box;
 }
@@ -735,6 +727,10 @@ video {
 
 .contents{
   display: contents;
+}
+
+.\!contents{
+  display: contents !important;
 }
 
 .hidden{

@@ -11,7 +11,7 @@ export const App = () => {
     <Router>
       <ScrollToTop />
       <Routes>
-        <Route path="/" Component={HomePage}></Route>
+        <Route path="*" Component={HomePage}></Route>
         <Route path="/login" Component={LoginPage}></Route>
         <Route path="/register" Component={RegisterPage}></Route>
         <Route path="/products" Component={ProductsPage}></Route>

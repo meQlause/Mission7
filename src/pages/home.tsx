@@ -7,19 +7,22 @@ import { mousePointerTracking, touchTracking } from "../utils/funtions";
 import { FooterLayout } from "../layouts/footer";
 import { ShowProductComponent } from "../components/showProduct";
 import { ImageAsBackgroudUI } from "../components/UIs/imageAsBackground";
-import { getData } from "../services/getData";
+import { getData } from "../services/api/getData";
 import { useNavigate } from "react-router-dom";
 import type { Content } from "../utils/types";
 
 export const HomePage = () => {
+  const { contents: data } = getData();
+  if (!data) return <>Error</>;
+
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [contents, setContents] = useState<Content[]>(getData().getAllData().data);
+  const [contents, setContents] = useState<Content[]>(data.getAllData().data);
   const navigate = useNavigate();
   const ulRef = useRef<HTMLUListElement>(null);
 
   const selectCategory = (selected: string) => {
     setSelectedCategory(selected);
-    setContents(getData().getRandomizeData([3, 6, 9][Math.floor(Math.random() * 3)]).data);
+    setContents(data.getRandomizeData([3, 6, 9][Math.floor(Math.random() * 3)]).data);
   };
 
   return (

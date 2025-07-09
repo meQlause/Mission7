@@ -7,6 +7,13 @@ export type CheckboxUIProps = {
   id?: string;
 };
 
+export type DataStoreType = {
+  contents: Content[] | null;
+  loading: boolean;
+  error: string | null;
+  fetchData: () => Promise<void>;
+};
+
 export type LoginFormValues = {
   email: string;
   password: string;

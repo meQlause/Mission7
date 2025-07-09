@@ -8,9 +8,12 @@ import { StarRatingUi } from "../components/UIs/stars";
 import { DefaultLayout } from "../layouts/default";
 import { FooterLayout } from "../layouts/footer";
 import { HeaderLayout } from "../layouts/header";
-import { getData } from "../services/getData";
+import { getData } from "../services/api/getData";
 
 export const ProductsDetailsPage = () => {
+  const { contents } = getData();
+  if (!contents) return <>Error</>;
+
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const idNumber = Number(id);
@@ -18,7 +21,7 @@ export const ProductsDetailsPage = () => {
     navigate("/");
   }
 
-  const data = getData().getId(idNumber).data[0];
+  const data = contents.getId(idNumber).data[0];
   const { courseDetails } = data.details;
   const getDiscountPrice = (price: string, discount: number): string => {
     const priceInteger = Number(price.split(" ").at(-1)?.slice(0, -1)) * (discount / 100);
@@ -252,7 +255,7 @@ export const ProductsDetailsPage = () => {
           <p className="text-bodyMedium font-light">
             Expansi Pengetahuan Anda dengan Rekomendasi Spesial Kami.
           </p>
-          <ShowProductComponent contents={getData().getRandomizeData(3).data} />
+          <ShowProductComponent contents={contents.getRandomizeData(3).data} />
         </div>
       </div>
 
