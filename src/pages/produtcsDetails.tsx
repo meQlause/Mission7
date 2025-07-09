@@ -12,15 +12,15 @@ import { getData } from "../services/api/getData";
 
 export const ProductsDetailsPage = () => {
   const { contents } = getData();
-  if (!contents) return <>Error</>;
-
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  
   const idNumber = Number(id);
   if (isNaN(idNumber)) {
     navigate("/");
   }
 
+  if (!contents) return <>Error</>;
   const data = contents.getId(idNumber).data[0];
   const { courseDetails } = data.details;
   const getDiscountPrice = (price: string, discount: number): string => {

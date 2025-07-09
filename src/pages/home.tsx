@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ButtonUI } from "../components/UIs/button";
 import { DividerUI } from "../components/UIs/divider";
 import { TextInput } from "../components/UIs/input";
@@ -13,12 +13,17 @@ import type { Content } from "../utils/types";
 
 export const HomePage = () => {
   const { contents: data } = getData();
-  if (!data) return <>Error</>;
-
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [contents, setContents] = useState<Content[]>(data.getAllData().data);
+  const [contents, setContents] = useState<Content[]>([]);
   const navigate = useNavigate();
   const ulRef = useRef<HTMLUListElement>(null);
+  useEffect(() => {
+    if (data) {
+      setContents(data.getAllData().data);
+    }
+  }, [data]);
+
+  if (!data) return <>Error: Failed to load data</>;
 
   const selectCategory = (selected: string) => {
     setSelectedCategory(selected);
