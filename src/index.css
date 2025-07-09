@@ -725,12 +725,12 @@ video {
   display: grid;
 }
 
-.contents{
-  display: contents;
-}
-
 .\!contents{
   display: contents !important;
+}
+
+.contents{
+  display: contents;
 }
 
 .hidden{

@@ -25,9 +25,13 @@ import { onRequest } from "firebase-functions/https";
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
 setGlobalOptions({ maxInstances: 10 });
+import cors from "cors";
+const corsHandler = cors({ origin: true });
 
 import { contents } from "./utils/dataMockup";
 
 export const mainVideoBelajar = onRequest((request, response) => {
-  response.send(contents);
+  corsHandler(request, response, () => {
+    response.send(contents);
+  });
 });
