@@ -1,17 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { CardDetailsComponent } from "../components/cardDetails";
 import { CategoryComponent } from "../components/category";
-import { CheckboxUI } from "../components/UIs/checkbox";
 import { DefaultLayout } from "../layouts/default";
 import { HeaderLayout } from "../layouts/header";
 import { getData } from "../services/api/getData";
 import type { CategoryContent } from "../utils/types";
 import { DividerUI } from "../components/UIs/divider";
 import { ButtonUI } from "../components/UIs/button";
+import { useState } from "react";
 
 export const paymenMethodPage = () => {
   const { contents } = getData();
   const { id } = useParams<{ id: string }>();
+  const [selectedPayment, setSelectedPayment] = useState<string>("");
   const navigate = useNavigate();
 
   const idNumber = Number(id);
@@ -24,7 +25,7 @@ export const paymenMethodPage = () => {
 
   const filter = (filter: string, id: string) => {
     console.log(filter);
-    console.log(id);
+    setSelectedPayment(id);
   };
 
   const transfromToNumber = (price: string): string => {
@@ -43,38 +44,46 @@ export const paymenMethodPage = () => {
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Pemasaran
-          <CheckboxUI id="1" />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img src="/assets/paymentMethods/BCA.png" /> Bank BCA
+          </div>
+          <img className={selectedPayment !== "11" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("pemasaran", "1"),
+      func: () => filter("Bank BCA", "11"),
     },
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Digital & Teknologi
-          <CheckboxUI id="2" />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img src="/assets/paymentMethods/BNI.png" /> Bank BNI
+          </div>
+          <img className={selectedPayment !== "12" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("digital dan teknologi", "2"),
+      func: () => filter("Bank BNI", "12"),
     },
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Pengembangan Diri
-          <CheckboxUI id="3" />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img src="/assets/paymentMethods/BRI.png" /> Bank BRI
+          </div>
+          <img className={selectedPayment !== "13" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("pengembangan diri", "3"),
+      func: () => filter("Bank BRI", "13"),
     },
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Manajemen Bisnis
-          <CheckboxUI id="4" />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img className="h-2" src="/assets/paymentMethods/mandiri.png" /> Bank Mandiri
+          </div>
+          <img className={selectedPayment !== "14" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("manajemen bisnis", "4"),
+      func: () => filter("Bank Mandiri", "14"),
     },
   ];
 
@@ -82,38 +91,46 @@ export const paymenMethodPage = () => {
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Pemasaran
-          <CheckboxUI id="1" />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img src="/assets/paymentMethods/dana.png" /> Dana
+          </div>
+          <img className={selectedPayment !== "15" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("pemasaran", "1"),
+      func: () => filter("Dana", "15"),
     },
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Digital & Teknologi
-          <CheckboxUI id="2" />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img src="/assets/paymentMethods/ovo.png" /> OVO
+          </div>
+          <img className={selectedPayment !== "16" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("digital dan teknologi", "2"),
+      func: () => filter("OVO", "16"),
     },
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Pengembangan Diri
-          <CheckboxUI id="3" />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img src="/assets/paymentMethods/link.png" /> LinkAja
+          </div>
+          <img className={selectedPayment !== "17" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("pengembangan diri", "3"),
+      func: () => filter("LinkAja", "17"),
     },
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Manajemen Bisnis
-          <CheckboxUI id="4" />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <img src="/assets/paymentMethods/shoope.png" /> ShoopePay
+          </div>
+          <img className={selectedPayment !== "18" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("manajemen bisnis", "4"),
+      func: () => filter("ShoopePay", "18"),
     },
   ];
 
@@ -121,38 +138,13 @@ export const paymenMethodPage = () => {
     {
       element: (
         <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Pemasaran
-          <CheckboxUI id="1" />
+          <div className="flex flex-row items-center justify-center">
+            <img src="/assets/paymentMethods/CC.png" />
+          </div>
+          <img className={selectedPayment !== "19" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("pemasaran", "1"),
-    },
-    {
-      element: (
-        <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Digital & Teknologi
-          <CheckboxUI id="2" />
-        </div>
-      ),
-      func: () => filter("digital dan teknologi", "2"),
-    },
-    {
-      element: (
-        <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Pengembangan Diri
-          <CheckboxUI id="3" />
-        </div>
-      ),
-      func: () => filter("pengembangan diri", "3"),
-    },
-    {
-      element: (
-        <div className="ml-1 flex w-full flex-row items-center justify-between gap-5">
-          Manajemen Bisnis
-          <CheckboxUI id="4" />
-        </div>
-      ),
-      func: () => filter("manajemen bisnis", "4"),
+      func: () => filter("CC", "19"),
     },
   ];
   return (
@@ -170,8 +162,9 @@ export const paymenMethodPage = () => {
                     <h6 className="text-heading6 font-bold">Transfer Bank</h6>
                   </div>
                 }
+                titleClassName="border px-4 py-2 rounded-md"
                 content={TransferBankContent}
-                contentClassName="text-[#3A3541AD] hover:text-[#3ECF4C] hover:text-decoration-none"
+                contentClassName="border px-4 py-2 rounded-md text-[#3A3541AD] hover:text-[#3ECF4C] hover:text-decoration-none flex items-center"
               />
             </div>
             <div className="flex flex-col justify-between">
@@ -182,8 +175,9 @@ export const paymenMethodPage = () => {
                     <h6 className="text-heading6 font-bold">E-Wallet</h6>
                   </div>
                 }
+                titleClassName="border px-4 py-2 rounded-md"
                 content={eWalletContent}
-                contentClassName="text-[#3A3541AD] hover:text-[#3ECF4C] hover:text-decoration-none"
+                contentClassName="flex items-center border px-4 py-2 rounded-md text-[#3A3541AD] hover:text-[#3ECF4C] hover:text-decoration-none"
               />
             </div>
             <div className="flex flex-col justify-between">
@@ -194,8 +188,9 @@ export const paymenMethodPage = () => {
                     <h6 className="text-heading6 font-bold">Kartu Kredit/Debit</h6>
                   </div>
                 }
+                titleClassName="border px-4 py-2 rounded-md"
                 content={kartuKreditDebitContent}
-                contentClassName="text-[#3A3541AD] hover:text-[#3ECF4C] hover:text-decoration-none"
+                contentClassName="flex items-center border px-4 py-2 rounded-md text-[#3A3541AD] hover:text-[#3ECF4C] hover:text-decoration-none"
               />
             </div>
           </DefaultLayout>

@@ -9,6 +9,7 @@ export const CategoryComponent = ({
   titleClassName = "",
   content,
   contentClassName = "",
+  listClassName = "",
 }: CategoryProps) => {
   const [showCategory, setShowCategory] = useState<boolean>(false);
   const isMobile = useIsMobile();
@@ -21,10 +22,10 @@ export const CategoryComponent = ({
     <>
       <div className={`grid w-full ${width} gap-0 ${showCategory ? "gap-2" : "gap-0"}`}>
         <div
-          className={`flex cursor-pointer items-center justify-between ${!forceShow && "md:cursor-default"}`}
+          className={`flex cursor-pointer items-center ${titleClassName} justify-between ${!forceShow && "md:cursor-default"}`}
           onClick={handleCategoryToggle}
         >
-          <div className={`text-heading6 font-bold ${titleClassName}`}>{title}</div>
+          <div className="text-heading6 font-bold">{title}</div>
           <img
             className={`${showCategory ? "rotate-0" : "rotate-90"} block h-[15px] transition-transform duration-200 ${!forceShow && "md:hidden"}`}
             src="/assets/right-arrow.png"
@@ -32,7 +33,7 @@ export const CategoryComponent = ({
           />
         </div>
         <ul
-          className={`${showCategory ? "flex gap-3" : "hidden gap-0"} ${isMobile && "flex"} mt-4 flex-col ${!forceShow && "md:flex"} md:gap-3`}
+          className={`${listClassName} ${showCategory ? "flex gap-3" : "hidden gap-0"} ${isMobile && "flex"} flex-col ${!forceShow && "md:flex"} md:gap-3`}
         >
           {Object.entries(content).map((value, index) => (
             <li

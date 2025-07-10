@@ -47,6 +47,7 @@ export type CategoryProps = {
   titleClassName?: string;
   content: CategoryContent[];
   contentClassName?: string;
+  listClassName?: string;
 };
 
 export type CategoryContent = {

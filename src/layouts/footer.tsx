@@ -80,9 +80,21 @@ export const FooterLayout = () => {
           </div>
         </div>
         <div className="m-0 my-5 flex flex-col gap-10 md:flex-row md:items-start md:justify-start">
-          <CategoryComponent title="Kategori" content={kategoriContent} />
-          <CategoryComponent title="Perusahaan" content={perusahaanContent} />
-          <CategoryComponent title="Komunitas" content={komunitasContent} />
+          <CategoryComponent
+            title="Kategori"
+            content={kategoriContent}
+            listClassName="items-start"
+          />
+          <CategoryComponent
+            title="Perusahaan"
+            content={perusahaanContent}
+            listClassName="items-start"
+          />
+          <CategoryComponent
+            title="Komunitas"
+            content={komunitasContent}
+            listClassName="items-start"
+          />
         </div>
       </div>
       <DividerUI />
