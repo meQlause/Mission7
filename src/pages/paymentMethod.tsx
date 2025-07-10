@@ -7,13 +7,22 @@ import { getData } from "../services/api/getData";
 import type { CategoryContent } from "../utils/types";
 import { DividerUI } from "../components/UIs/divider";
 import { ButtonUI } from "../components/UIs/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FooterLayout } from "../layouts/footer";
+import { usePaymentStepStore } from "../stores/usePaymentStepStore";
 
-export const paymenMethodPage = () => {
+export const paymentMethodPage = () => {
   const { contents } = getData();
   const { id } = useParams<{ id: string }>();
   const [selectedPayment, setSelectedPayment] = useState<string>("");
   const navigate = useNavigate();
+  const { isActive, setActive, nextStep } = usePaymentStepStore();
+
+  useEffect(() => {
+    if (!isActive) {
+      setActive(!isActive);
+    }
+  }, []);
 
   const idNumber = Number(id);
   if (isNaN(idNumber)) {
@@ -150,7 +159,11 @@ export const paymenMethodPage = () => {
   return (
     <>
       <HeaderLayout />
-      <div className="px-standard flex flex-col-reverse justify-between gap-16 py-14 lg:flex-row">
+      <img
+        className="mx-auto mt-10 block w-full max-w-96 px-5 lg:hidden"
+        src="/assets/payment-method-stepper-mobile.png"
+      />
+      <div className="px-standard flex flex-col-reverse justify-between gap-5 py-14 lg:flex-row lg:gap-16">
         <div className="flex flex-col gap-5">
           <DefaultLayout className="flex h-fit w-full flex-col gap-5 rounded-lg p-5">
             <h2 className="text-heading6 font-bold">Metode Pembayaran</h2>
@@ -220,6 +233,7 @@ export const paymenMethodPage = () => {
         </div>
         <CardDetailsComponent data={data} />
       </div>
+      <FooterLayout />
     </>
   );
 };

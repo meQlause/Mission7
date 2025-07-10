@@ -5,7 +5,8 @@ import { HomePage } from "./pages/home";
 import { ProductsPage } from "./pages/products";
 import { ProductsDetailsPage } from "./pages/produtcsDetails";
 import { ScrollToTop } from "./services/scrollToTop";
-import { paymenMethodPage } from "./pages/paymentMethod";
+import { paymentMethodPage } from "./pages/paymentMethod";
+import { paymentPage } from "./pages/payment";
 
 export const App = () => {
   return (
@@ -17,7 +18,8 @@ export const App = () => {
         <Route path="/register" Component={RegisterPage}></Route>
         <Route path="/products" Component={ProductsPage}></Route>
         <Route path="/product-details/:id" Component={ProductsDetailsPage}></Route>
-        <Route path="/select-payment-method/:id" Component={paymenMethodPage}></Route>
+        <Route path="/select-payment-method/:id" Component={paymentMethodPage}></Route>
+        <Route path="/payment/:payment/:id" Component={paymentPage}></Route>
       </Routes>
     </Router>
   );

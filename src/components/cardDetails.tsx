@@ -8,7 +8,7 @@ export const CardDetailsComponent: React.FC<CardDetailsProp> = ({ data }) => {
     return `Rp ${priceInteger}K`;
   };
   return (
-    <DefaultLayout className="flex h-fit w-[351px] min-w-[350px] flex-col gap-2 rounded-lg p-5">
+    <DefaultLayout className="flex h-fit flex-col gap-2 rounded-lg p-5 lg:w-[351px] lg:min-w-[350px]">
       <h2 className="mb-3 text-heading6 font-bold">{data.title}</h2>
       <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row items-start gap-2">

@@ -2,10 +2,28 @@ import { useState } from "react";
 import { useAuth } from "../services/hooks/useAuth";
 import { ButtonUI } from "../components/UIs/button";
 import { useNavigate } from "react-router-dom";
+import { usePaymentStepStore } from "../stores/usePaymentStepStore";
+import { useIsMobile } from "../services/hooks/useIsMobile";
 
 export const HeaderLayout = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const isMobile = useIsMobile();
   const { isAuthenticated } = useAuth();
+  const { currentStep, isActive } = usePaymentStepStore();
+  const navigate = useNavigate();
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case "select-payment":
+        return <img className="hidden lg:block" src="/assets/payment-method-stepper-dekstop.png" />;
+      case "payment":
+        return "payment";
+      case "done":
+        return "done";
+      default:
+        return null;
+    }
+  };
 
   const logout = () => {
     setShowDropdown(!showDropdown);
@@ -13,7 +31,6 @@ export const HeaderLayout = () => {
     navigate("/");
     window.location.reload();
   };
-  const navigate = useNavigate();
 
   return (
     <>
@@ -28,34 +45,38 @@ export const HeaderLayout = () => {
         <div>
           <div className="relative flex flex-row items-center gap-10">
             <img
-              className="block h-[12px] w-[18px] cursor-pointer md:hidden"
+              className="block h-[12px] w-[18px] cursor-pointer lg:hidden"
               onClick={() => setShowDropdown(!showDropdown)}
               src="/assets/dropdown-icon.png"
               alt="Dropdown menu"
             />
           </div>
           {isAuthenticated ? (
-            <div className="hidden md:block">
-              <div className="relative flex flex-row items-center gap-10">
-                <div className="cursor-pointer" onClick={() => setShowDropdown(!showDropdown)}>
-                  Kategori
-                  {showDropdown && (
-                    <div className="absolute -left-10 top-full z-10 mt-2 min-w-[200px] bg-white shadow">
-                      <div className="border-b border-t p-4 hover:bg-slate-100">Profil saya</div>
-                      <div className="border-b p-4 hover:bg-slate-100">Kelas saya</div>
-                      <div className="border-b p-4 hover:bg-slate-100">Pesanan saya</div>
-                      <div
-                        onClick={logout}
-                        className="flex flex-row items-center gap-2 border-b p-4 text-red-500 hover:bg-slate-100"
-                      >
-                        Keluar <img src="/assets/Logout.png" />
+            isActive && !isMobile ? (
+              renderStepContent()
+            ) : (
+              <div className="hidden lg:block">
+                <div className="relative flex flex-row items-center gap-10">
+                  <div className="cursor-pointer" onClick={() => setShowDropdown(!showDropdown)}>
+                    Kategori
+                    {showDropdown && (
+                      <div className="absolute -left-10 top-full z-10 mt-2 min-w-[200px] bg-white shadow">
+                        <div className="border-b border-t p-4 hover:bg-slate-100">Profil saya</div>
+                        <div className="border-b p-4 hover:bg-slate-100">Kelas saya</div>
+                        <div className="border-b p-4 hover:bg-slate-100">Pesanan saya</div>
+                        <div
+                          onClick={logout}
+                          className="flex flex-row items-center gap-2 border-b p-4 text-red-500 hover:bg-slate-100"
+                        >
+                          Keluar <img src="/assets/Logout.png" />
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                  <img className="avatar h-[45px]" src="/assets/avatar.png" alt="User avatar" />
                 </div>
-                <img className="avatar h-[45px]" src="/assets/avatar.png" alt="User avatar" />
               </div>
-            </div>
+            )
           ) : (
             <div className="hidden flex-row items-center gap-3 md:flex">
               <span
