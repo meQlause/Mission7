@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useIsMobile } from "../services/hooks/useIsMobile";
 import type { CategoryProps } from "../utils/types";
 
-export const CategoryComponent = ({
+export const CategoryComponent: React.FC<CategoryProps> = ({
   forceShow = false,
   width = "",
   title,
@@ -10,8 +10,9 @@ export const CategoryComponent = ({
   content,
   contentClassName = "",
   listClassName = "",
-}: CategoryProps) => {
-  const [showCategory, setShowCategory] = useState<boolean>(false);
+  showCategoryDefault = false,
+}) => {
+  const [showCategory, setShowCategory] = useState<boolean>(showCategoryDefault);
   const isMobile = useIsMobile();
 
   const handleCategoryToggle = () => {

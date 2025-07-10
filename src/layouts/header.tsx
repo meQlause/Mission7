@@ -17,11 +17,9 @@ export const HeaderLayout = () => {
       case "select-payment":
         return <img className="hidden lg:block" src="/assets/payment-method-stepper-dekstop.png" />;
       case "payment":
-        return "payment";
+        return <img className="hidden lg:block" src="/assets/payment-stepper-dekstop.png" />;
       case "done":
-        return "done";
-      default:
-        return null;
+        return <img className="hidden lg:block" src="/assets/payment-done-stepper-dekstop.png" />;
     }
   };
 

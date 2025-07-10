@@ -1,8 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
+import { usePaymentStepStore } from "../stores/usePaymentStepStore";
 import type { CardDetailsProp } from "../utils/types";
 import { ButtonUI } from "./UIs/button";
 
 export const CardDetailsComponent: React.FC<CardDetailsProp> = ({ data }) => {
+  const { isActive } = usePaymentStepStore();
+  const navigate = useNavigate();
+
   const getDiscountPrice = (price: string, discount: number): string => {
     const priceInteger = Number(price.split(" ").at(-1)?.slice(0, -1)) * (discount / 100);
     return `Rp ${priceInteger}K`;
@@ -24,7 +29,14 @@ export const CardDetailsComponent: React.FC<CardDetailsProp> = ({ data }) => {
       <p className="text-bodyMedium font-thin text-[#0980E2]">
         Penawaran spesial tersisa 2 hari lagi!
       </p>
-      <ButtonUI className="font-bold"> Beli Sekarang </ButtonUI>
+      {!isActive && (
+        <ButtonUI
+          onClick={() => navigate(`/select-payment-method/${data.id}`)}
+          className="font-bold"
+        >
+          Beli Sekarang
+        </ButtonUI>
+      )}
       <div className="mt-2 flex w-full flex-col">
         <h3 className="mb-1 text-bodyMedium font-bold"> Kelas ini sudah termasuk</h3>
         <div className="grid grid-cols-2">

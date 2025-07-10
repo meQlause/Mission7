@@ -27,7 +27,7 @@ export const CourseDetailsComponent: React.FC<CourseDetail> = ({
           className={`${isShowSubheader ? "flex" : "hidden"} justify-between rounded-md border p-3`}
         >
           {value[0]}
-          <div className="hidden gap-5 md:flex">
+          <div className="hidden gap-5 lg:flex">
             <div className="flex flex-row gap-2">
               <img src="/assets/play.png" />
               <span>{value[1].kind}</span>

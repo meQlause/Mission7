@@ -83,17 +83,17 @@ export const FooterLayout = () => {
           <CategoryComponent
             title="Kategori"
             content={kategoriContent}
-            listClassName="items-start"
+            listClassName="items-start mt-5"
           />
           <CategoryComponent
             title="Perusahaan"
             content={perusahaanContent}
-            listClassName="items-start"
+            listClassName="items-start mt-5"
           />
           <CategoryComponent
             title="Komunitas"
             content={komunitasContent}
-            listClassName="items-start"
+            listClassName="items-start mt-5"
           />
         </div>
       </div>

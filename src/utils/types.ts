@@ -48,6 +48,7 @@ export type CategoryProps = {
   content: CategoryContent[];
   contentClassName?: string;
   listClassName?: string;
+  showCategoryDefault?: boolean;
 };
 
 export type CategoryContent = {

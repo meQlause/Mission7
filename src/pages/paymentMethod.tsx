@@ -16,13 +16,18 @@ export const paymentMethodPage = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedPayment, setSelectedPayment] = useState<string>("");
   const navigate = useNavigate();
-  const { isActive, setActive, nextStep } = usePaymentStepStore();
+  const { nextStep, setActive, isActive } = usePaymentStepStore();
 
   useEffect(() => {
     if (!isActive) {
       setActive(!isActive);
     }
   }, []);
+
+  const next = () => {
+    nextStep();
+    navigate(`/payment/${selectedPayment}/${id}`);
+  };
 
   const idNumber = Number(id);
   if (isNaN(idNumber)) {
@@ -56,10 +61,10 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center gap-5">
             <img src="/assets/paymentMethods/BCA.png" /> Bank BCA
           </div>
-          <img className={selectedPayment !== "11" ? "hidden" : ""} src="/assets/selected.png" />
+          <img className={selectedPayment !== "bca" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("Bank BCA", "11"),
+      func: () => filter("Bank BCA", "bca"),
     },
     {
       element: (
@@ -67,10 +72,10 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center gap-5">
             <img src="/assets/paymentMethods/BNI.png" /> Bank BNI
           </div>
-          <img className={selectedPayment !== "12" ? "hidden" : ""} src="/assets/selected.png" />
+          <img className={selectedPayment !== "bni" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("Bank BNI", "12"),
+      func: () => filter("Bank BNI", "bni"),
     },
     {
       element: (
@@ -78,10 +83,10 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center gap-5">
             <img src="/assets/paymentMethods/BRI.png" /> Bank BRI
           </div>
-          <img className={selectedPayment !== "13" ? "hidden" : ""} src="/assets/selected.png" />
+          <img className={selectedPayment !== "bri" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("Bank BRI", "13"),
+      func: () => filter("Bank BRI", "bri"),
     },
     {
       element: (
@@ -89,10 +94,13 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center gap-5">
             <img className="h-2" src="/assets/paymentMethods/mandiri.png" /> Bank Mandiri
           </div>
-          <img className={selectedPayment !== "14" ? "hidden" : ""} src="/assets/selected.png" />
+          <img
+            className={selectedPayment !== "mandiri" ? "hidden" : ""}
+            src="/assets/selected.png"
+          />
         </div>
       ),
-      func: () => filter("Bank Mandiri", "14"),
+      func: () => filter("Bank Mandiri", "mandiri"),
     },
   ];
 
@@ -103,10 +111,10 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center gap-5">
             <img src="/assets/paymentMethods/dana.png" /> Dana
           </div>
-          <img className={selectedPayment !== "15" ? "hidden" : ""} src="/assets/selected.png" />
+          <img className={selectedPayment !== "dana" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("Dana", "15"),
+      func: () => filter("Dana", "dana"),
     },
     {
       element: (
@@ -114,10 +122,10 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center gap-5">
             <img src="/assets/paymentMethods/ovo.png" /> OVO
           </div>
-          <img className={selectedPayment !== "16" ? "hidden" : ""} src="/assets/selected.png" />
+          <img className={selectedPayment !== "ovo" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("OVO", "16"),
+      func: () => filter("OVO", "ovo"),
     },
     {
       element: (
@@ -125,10 +133,10 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center gap-5">
             <img src="/assets/paymentMethods/link.png" /> LinkAja
           </div>
-          <img className={selectedPayment !== "17" ? "hidden" : ""} src="/assets/selected.png" />
+          <img className={selectedPayment !== "link" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("LinkAja", "17"),
+      func: () => filter("LinkAja", "link"),
     },
     {
       element: (
@@ -136,10 +144,13 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center gap-5">
             <img src="/assets/paymentMethods/shoope.png" /> ShoopePay
           </div>
-          <img className={selectedPayment !== "18" ? "hidden" : ""} src="/assets/selected.png" />
+          <img
+            className={selectedPayment !== "shoope" ? "hidden" : ""}
+            src="/assets/selected.png"
+          />
         </div>
       ),
-      func: () => filter("ShoopePay", "18"),
+      func: () => filter("ShoopePay", "shoope"),
     },
   ];
 
@@ -150,10 +161,10 @@ export const paymentMethodPage = () => {
           <div className="flex flex-row items-center justify-center">
             <img src="/assets/paymentMethods/CC.png" />
           </div>
-          <img className={selectedPayment !== "19" ? "hidden" : ""} src="/assets/selected.png" />
+          <img className={selectedPayment !== "cc" ? "hidden" : ""} src="/assets/selected.png" />
         </div>
       ),
-      func: () => filter("CC", "19"),
+      func: () => filter("cc", "19"),
     },
   ];
   return (
@@ -170,6 +181,7 @@ export const paymentMethodPage = () => {
             <div className="flex flex-col justify-between">
               <CategoryComponent
                 forceShow={true}
+                showCategoryDefault={true}
                 title={
                   <div className="flex flex-row items-center gap-3">
                     <h6 className="text-heading6 font-bold">Transfer Bank</h6>
@@ -228,7 +240,9 @@ export const paymentMethodPage = () => {
                 </p>
               </div>
             </div>
-            <ButtonUI> Beli Sekarang</ButtonUI>
+            <ButtonUI onClick={next} disabled={selectedPayment === ""}>
+              Beli Sekarang
+            </ButtonUI>
           </DefaultLayout>
         </div>
         <CardDetailsComponent data={data} />
