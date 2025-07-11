@@ -7,10 +7,14 @@ import { DividerUI } from "../components/UIs/divider";
 import { ButtonUI } from "../components/UIs/button";
 import { FooterLayout } from "../layouts/footer";
 import { usePaymentStepStore } from "../stores/usePaymentStepStore";
+import { useAuth } from "../services/hooks/useAuth";
+import { useAddOwnedProduct } from "../services/api/ownedProducts";
 
 export const paymentPage = () => {
   const { contents } = getData();
   const { payment, id } = useParams<{ payment: string; id: string }>();
+  const { uid } = useAuth();
+  const { putPendingTx } = useAddOwnedProduct();
   const navigate = useNavigate();
   const { nextStep } = usePaymentStepStore();
 
@@ -34,11 +38,6 @@ export const paymentPage = () => {
   if (!contents) return <>Error</>;
   const data = contents.getId(idNumber).data[0];
 
-  const next = () => {
-    nextStep();
-    navigate(`/payment-completed`);
-  };
-
   const transfromToNumber = (price: string): string => {
     return parseInt(price.split(" ").at(-1)?.split("K")["0"].concat("000")!).toLocaleString(
       "id-ID"
@@ -49,6 +48,14 @@ export const paymentPage = () => {
     return (parseInt(transfromToNumber(basevalue).replace(/\./g, "")) + value).toLocaleString(
       "id-ID"
     );
+  };
+
+  const addOwnedProducts = () => {
+    if (uid) {
+      putPendingTx(uid, String(data.id));
+      nextStep();
+      navigate(`/payment-completed`);
+    }
   };
 
   return (
@@ -94,7 +101,7 @@ export const paymentPage = () => {
             </div>
             <div className="flex flex-col gap-5 lg:flex-row">
               <ButtonUI variant="secondary"> Ganti Metode Pembayaran</ButtonUI>
-              <ButtonUI onClick={next}> Bayar Sekarang </ButtonUI>
+              <ButtonUI onClick={addOwnedProducts}> Bayar Sekarang </ButtonUI>
             </div>
           </DefaultLayout>
         </div>

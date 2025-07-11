@@ -4,24 +4,26 @@ import { ButtonUI } from "../components/UIs/button";
 import { DividerUI } from "../components/UIs/divider";
 import { DefaultLayout } from "../layouts/default";
 import { HeaderLayout } from "../layouts/header";
+import { Register } from "../services/api/register";
+import type { User } from "firebase/auth";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const register = (data: {
+  const register = async (data: {
     name: string;
     email: string;
     phone: number;
     password: string;
     passwordConfirmation: string;
   }) => {
-    const email = localStorage.getItem(data.email);
-    if (email) {
-      return window.confirm("Your Email Is Already Registered.");
+    const credentials: User | Error = await Register(data.email, data.password);
+
+    if (credentials instanceof Error) {
+      return window.confirm(credentials.message);
     }
 
-    localStorage.setItem(data.email, data.password);
-    window.confirm("Registration is Succeded.");
+    window.confirm("Registration succeeded.");
     navigate("/login");
   };
 

@@ -25,7 +25,8 @@ export const HeaderLayout = () => {
 
   const logout = () => {
     setShowDropdown(!showDropdown);
-    localStorage.setItem("isAuth", "false");
+    localStorage.removeItem("credential");
+
     navigate("/");
     window.location.reload();
   };

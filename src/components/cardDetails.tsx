@@ -3,14 +3,25 @@ import { DefaultLayout } from "../layouts/default";
 import { usePaymentStepStore } from "../stores/usePaymentStepStore";
 import type { CardDetailsProp } from "../utils/types";
 import { ButtonUI } from "./UIs/button";
+import { useAuth } from "../services/hooks/useAuth";
+import { useAddPendingTx } from "../services/api/addPendingData";
 
 export const CardDetailsComponent: React.FC<CardDetailsProp> = ({ data }) => {
   const { isActive } = usePaymentStepStore();
+  const { addPendingTx } = useAddPendingTx();
+  const { uid } = useAuth();
   const navigate = useNavigate();
 
   const getDiscountPrice = (price: string, discount: number): string => {
     const priceInteger = Number(price.split(" ").at(-1)?.slice(0, -1)) * (discount / 100);
     return `Rp ${priceInteger}K`;
+  };
+
+  const addTx = async () => {
+    if (uid) {
+      await addPendingTx(uid, String(data.id));
+      navigate(`/select-payment-method/${data.id}`);
+    }
   };
   return (
     <DefaultLayout className="flex h-fit flex-col gap-2 rounded-lg p-5 lg:w-[351px] lg:min-w-[350px]">
@@ -30,10 +41,7 @@ export const CardDetailsComponent: React.FC<CardDetailsProp> = ({ data }) => {
         Penawaran spesial tersisa 2 hari lagi!
       </p>
       {!isActive && (
-        <ButtonUI
-          onClick={() => navigate(`/select-payment-method/${data.id}`)}
-          className="font-bold"
-        >
+        <ButtonUI onClick={addTx} className="font-bold">
           Beli Sekarang
         </ButtonUI>
       )}

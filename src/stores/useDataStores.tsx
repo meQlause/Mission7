@@ -8,7 +8,7 @@ export const useDataStore = create<DataStoreType>((set) => ({
   fetchData: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch("https://mainvideobelajar-qujaewr6yq-uc.a.run.app/");
+      const res = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/mainVideoBelajar`);
       if (!res) throw new Error("Error Fecthing Data");
       const contents = await res.json();
       set({ contents, loading: false });

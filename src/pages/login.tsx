@@ -4,21 +4,23 @@ import { ButtonUI } from "../components/UIs/button";
 import { DividerUI } from "../components/UIs/divider";
 import { DefaultLayout } from "../layouts/default";
 import { HeaderLayout } from "../layouts/header";
+import { Login } from "../services/api/login";
+import type { User } from "firebase/auth";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
 
-  const login = (data: { email: string; password: string }) => {
-    const passwordToCompare = localStorage.getItem(data.email);
-    if (!passwordToCompare) {
-      return window.confirm("Your Email Is not Registered.");
+  const login = async (data: { email: string; password: string }) => {
+    const credentials: User | Error = await Login(data.email, data.password);
+
+    if (credentials instanceof Error) {
+      return window.confirm(credentials.message);
     }
-    if (!(passwordToCompare === data.password)) {
-      return window.confirm("Your Password Is Wrong.");
-    }
-    localStorage.setItem("isAuth", "true");
-    navigate("/products");
+
+    localStorage.setItem("credential", JSON.stringify(credentials.uid));
+    navigate("/");
   };
+
   return (
     <>
       <HeaderLayout />
