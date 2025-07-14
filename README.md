@@ -1,51 +1,19 @@
-# VideoBelajar App
+# API Overview
 
-This React application uses localStorage for data storage and authentication.
+This application uses Firebase as its backend and implements a simple API to manage product ownership and payment transactions. The API interacts with two main collections in the Firebase database:
 
-## Authentication System
+## Collections
 
-### User Registration
+- **owned_products**: Stores products that have been purchased by users. When a purchase is completed, the product data is added or updated in this collection using the PUT method, reflecting the change in ownership state.
+- **pending_txs**: Stores transactions that are currently in progress (i.e., payments that have not yet been completed). Data is added to this collection using the POST method when a payment process starts. Once the payment is completed, the transaction is removed from `pending_txs` (using the DELETE method) and added to `owned_products`.
 
-- Users can register with their name, email, phone, and password
-- Registration data is stored in localStorage using the email as the key
-- Password is stored directly in localStorage and not its hash (for development purpose onlly)
-- Email validation prevents duplicate registrations
+## HTTP Methods Used
 
-### User Login
+This application demonstrates the use of all four main HTTP methods:
 
-- Users authenticate using their registered email and password
-- The app checks localStorage for the stored password associated with the email
-- Authentication status is stored in localStorage with key "isAuth" set to "true"
-- Failed login attempts show confirmation dialogs
+- **GET**: Retrieves static product data, which is served directly from a Firebase serverless function.
+- **POST**: Adds a new pending transaction to the `pending_txs` collection when a user initiates a payment.
+- **PUT**: Updates the `owned_products` collection to reflect a completed purchase, changing the ownership state of a product.
+- **DELETE**: Removes a transaction from the `pending_txs` collection once the payment is complete and the product has been added to `owned_products`.
 
-### Authentication State
-
-- The `useAuth` hook manages authentication state
-- Checks localStorage for "isAuth" key on component mount
-- Returns boolean indicating if user is authenticated
-- Used throughout the app to conditionally render components
-
-### Logout
-
-- Users can logout via the header dropdown menu
-- Sets "isAuth" in localStorage to "false"
-- Redirects user to home page
-
-## localStorage Data Structure
-
-```
-localStorage:
-├── "user@email.com" → "userpassword" (user credentials)
-├── "isAuth" → "true" | "false" (authentication status)
-└── ... (other app data)
-```
-
-## Security Notes
-
-⚠️ **Important**: This implementation is for demonstration purposes only. In a production environment:
-
-- Never store passwords in plain text
-- Use secure authentication tokens
-- Implement proper password hashing
-- Use secure HTTP-only cookies or JWT tokens
-- Consider using a backend server for authentication
+This design ensures a clear separation between products in progress (pending payment) and products that have been purchased, while also providing a complete example of CRUD (Create, Read, Update, Delete) operations in a Firebase-backed application.
