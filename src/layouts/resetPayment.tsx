@@ -9,7 +9,6 @@ export const ResetPaymentLayout = () => {
   const { uid } = useAuth();
   const { removePendingTx } = useRemovePendingTx();
   useEffect(() => {
-    console.log(uid);
     if (uid) {
       removePendingTx(uid);
     }
